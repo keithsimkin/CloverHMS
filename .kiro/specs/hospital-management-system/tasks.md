@@ -124,6 +124,7 @@
 
 
 
+
 - [x] 5.1 Build calendar interface
 
 
@@ -161,50 +162,74 @@
   - Add toast notifications for actions
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
 
-- [ ] 6. Build staff management UI
-- [ ] 6.1 Build staff list and filtering
+- [x] 6. Build staff management UI
+
+
+
+
+- [x] 6.1 Build staff list and filtering
+
+
   - Create components/staff/StaffList.tsx with table display (mock data)
   - Implement filtering by department, role, and employment status
   - Add search functionality for staff members
   - _Requirements: 3.3_
 
-- [ ] 6.2 Build staff form
+- [x] 6.2 Build staff form
+
+
   - Create components/staff/StaffForm.tsx with React Hook Form
   - Add fields for employee ID, name, role, department, specialization, contact info, employment status, hire date
   - Implement unique employee ID validation
   - _Requirements: 3.1, 3.2, 3.5_
 
-- [ ] 6.3 Build staff schedule view
+- [x] 6.3 Build staff schedule view
+
+
   - Create components/staff/StaffSchedule.tsx displaying shifts and availability (mock data)
   - Implement schedule calendar view
   - _Requirements: 3.4_
 
-- [ ] 6.4 Build staff page
+- [x] 6.4 Build staff page
+
+
   - Create pages/Staff.tsx integrating list, form, and schedule components
   - Implement create/edit/deactivate staff actions
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
 
-- [ ] 7. Build inventory management UI
-- [ ] 7.1 Build inventory list and categories
+- [x] 7. Build inventory management UI
+
+
+
+
+- [x] 7.1 Build inventory list and categories
+
+
   - Create components/inventory/InventoryList.tsx with table display (mock data)
   - Group inventory items by category
   - Display low-stock alerts with visual indicators
   - Implement search and filtering
   - _Requirements: 4.1, 4.2, 4.4_
 
-- [ ] 7.2 Build inventory item form
+- [x] 7.2 Build inventory item form
+
+
   - Create components/inventory/InventoryItemForm.tsx with React Hook Form
   - Add fields for item code, name, category, quantity, unit of measure, reorder threshold, cost, supplier, location, expiry date
   - Implement validation for required fields
   - _Requirements: 4.1_
 
-- [ ] 7.3 Build inventory transaction interface
+- [x] 7.3 Build inventory transaction interface
+
+
   - Create components/inventory/InventoryTransaction.tsx for recording transactions
   - Implement transaction types (addition, usage, adjustment, disposal)
   - Display transaction history for each item (mock data)
   - _Requirements: 4.3, 4.5_
 
-- [ ] 7.4 Build inventory page
+- [x] 7.4 Build inventory page
+
+
   - Create pages/Inventory.tsx integrating list, form, and transaction components
   - Implement create/edit inventory items
   - Implement record transaction dialog
@@ -212,23 +237,36 @@
 
 ## Phase 4: Clinical Workflow UI
 
-- [ ] 8. Build clinical knowledge database UI
-- [ ] 8.1 Build symptom search and selection
+- [x] 8. Build clinical knowledge database UI
+
+
+
+
+
+- [x] 8.1 Build symptom search and selection
+
+
   - Create components/clinical/SymptomSearch.tsx with searchable dropdown (mock data)
   - Display symptom details (description, category, body system)
   - _Requirements: 11.2_
 
-- [ ] 8.2 Build medicine search and prescription
+- [x] 8.2 Build medicine search and prescription
+
+
   - Create components/clinical/MedicineSearch.tsx with searchable dropdown (mock data)
   - Display medicine details (dosage forms, strength options, contraindications, side effects, interactions)
   - _Requirements: 12.5_
 
-- [ ] 8.3 Build drug interaction warnings display
+- [x] 8.3 Build drug interaction warnings display
+
+
   - Create components/clinical/DrugInteractionWarning.tsx
   - Display warnings when prescribing multiple medicines
   - _Requirements: 12.4_
 
-- [ ] 8.4 Build diagnosis search and recording
+- [x] 8.4 Build diagnosis search and recording
+
+
   - Create components/clinical/DiagnosisSearch.tsx with searchable dropdown (mock data)
   - Add fields for severity, status, and clinical notes
   - _Requirements: 13.2, 13.3, 13.5, 13.6_

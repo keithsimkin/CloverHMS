@@ -2,6 +2,8 @@ import { createRouter, createRoute, createRootRoute, Outlet } from '@tanstack/re
 import { Dashboard } from './pages/Dashboard';
 import Patients from './pages/Patients';
 import Appointments from './pages/Appointments';
+import Staff from './pages/Staff';
+import Inventory from './pages/Inventory';
 import { Settings } from './pages/Settings';
 
 // Root route
@@ -50,9 +52,16 @@ const createPlaceholderRoute = (path: string, title: string) => {
   });
 };
 
-// Create placeholder routes for all other pages
-const staffRoute = createPlaceholderRoute('/staff', 'Staff Management');
-const inventoryRoute = createPlaceholderRoute('/inventory', 'Inventory Management');
+const staffRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/staff',
+  component: Staff,
+});
+const inventoryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/inventory',
+  component: Inventory,
+});
 const clinicalRoute = createPlaceholderRoute('/clinical', 'Clinical Workflow');
 const patientFlowRoute = createPlaceholderRoute('/patient-flow', 'Patient Flow');
 const triageRoute = createPlaceholderRoute('/triage', 'Triage');
