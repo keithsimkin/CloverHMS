@@ -4,6 +4,15 @@ import Patients from './pages/Patients';
 import Appointments from './pages/Appointments';
 import Staff from './pages/Staff';
 import Inventory from './pages/Inventory';
+import Clinical from './pages/Clinical';
+import PatientFlow from './pages/PatientFlow';
+import Triage from './pages/Triage';
+import Laboratory from './pages/Laboratory';
+import Pharmacy from './pages/Pharmacy';
+import Billing from './pages/Billing';
+import { BedManagement } from './pages/BedManagement';
+import { BloodDonors } from './pages/BloodDonors';
+import { BloodInventoryPage } from './pages/BloodInventoryPage';
 import { Settings } from './pages/Settings';
 
 // Root route
@@ -62,14 +71,51 @@ const inventoryRoute = createRoute({
   path: '/inventory',
   component: Inventory,
 });
-const clinicalRoute = createPlaceholderRoute('/clinical', 'Clinical Workflow');
-const patientFlowRoute = createPlaceholderRoute('/patient-flow', 'Patient Flow');
-const triageRoute = createPlaceholderRoute('/triage', 'Triage');
-const laboratoryRoute = createPlaceholderRoute('/laboratory', 'Laboratory');
-const pharmacyRoute = createPlaceholderRoute('/pharmacy', 'Pharmacy');
-const billingRoute = createPlaceholderRoute('/billing', 'Billing');
-const bedsRoute = createPlaceholderRoute('/beds', 'Bed Management');
-const bloodBankRoute = createPlaceholderRoute('/blood-bank', 'Blood Bank');
+const clinicalRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/clinical',
+  component: Clinical,
+});
+const patientFlowRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/patient-flow',
+  component: PatientFlow,
+});
+const triageRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/triage',
+  component: Triage,
+});
+const laboratoryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/laboratory',
+  component: Laboratory,
+});
+const pharmacyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/pharmacy',
+  component: Pharmacy,
+});
+const billingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/billing',
+  component: Billing,
+});
+const bedsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/beds',
+  component: BedManagement,
+});
+const bloodDonorsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/blood-donors',
+  component: BloodDonors,
+});
+const bloodBankRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/blood-bank',
+  component: BloodInventoryPage,
+});
 const emergencyRoute = createPlaceholderRoute('/emergency', 'Emergency Services');
 const opdRoute = createPlaceholderRoute('/opd', 'OPD Management');
 const ipdRoute = createPlaceholderRoute('/ipd', 'IPD Management');
@@ -96,6 +142,7 @@ const routeTree = rootRoute.addChildren([
   pharmacyRoute,
   billingRoute,
   bedsRoute,
+  bloodDonorsRoute,
   bloodBankRoute,
   emergencyRoute,
   opdRoute,

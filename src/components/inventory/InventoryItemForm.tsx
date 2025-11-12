@@ -34,16 +34,11 @@ const inventoryItemFormSchema = z.object({
   quantity: z.number().min(0, 'Quantity must be 0 or greater'),
   unit_of_measure: z.string().min(1, 'Unit of measure is required').max(50),
   reorder_threshold: z.number().min(0, 'Reorder threshold must be 0 or greater'),
-  unit_cost: z.number().min(0, 'Unit cost must be 0 or greater').optional().or(z.literal('')),
+  unit_cost: z.number().min(0, 'Unit cost must be 0 or greater').optional(),
   supplier: z.string().max(200).optional().or(z.literal('')),
   location: z.string().max(100).optional().or(z.literal('')),
   expiry_date: z.string().optional().or(z.literal('')),
-}).transform((data) => ({
-  ...data,
-  quantity: typeof data.quantity === 'string' ? Number(data.quantity) : data.quantity,
-  reorder_threshold: typeof data.reorder_threshold === 'string' ? Number(data.reorder_threshold) : data.reorder_threshold,
-  unit_cost: data.unit_cost === '' ? undefined : (typeof data.unit_cost === 'string' ? Number(data.unit_cost) : data.unit_cost),
-}));
+});
 
 type InventoryItemFormValues = z.infer<typeof inventoryItemFormSchema>;
 
@@ -70,7 +65,7 @@ export function InventoryItemForm({
           quantity: item.quantity,
           unit_of_measure: item.unit_of_measure,
           reorder_threshold: item.reorder_threshold,
-          unit_cost: item.unit_cost?.toString() || '',
+          unit_cost: item.unit_cost,
           supplier: item.supplier || '',
           location: item.location || '',
           expiry_date: item.expiry_date
@@ -84,7 +79,7 @@ export function InventoryItemForm({
           quantity: 0,
           unit_of_measure: '',
           reorder_threshold: 0,
-          unit_cost: '',
+          unit_cost: undefined,
           supplier: '',
           location: '',
           expiry_date: '',
@@ -188,7 +183,14 @@ export function InventoryItemForm({
                 <FormItem>
                   <FormLabel>Current Quantity *</FormLabel>
                   <FormControl>
-                    <Input type="number" min="0" placeholder="0" {...field} />
+                    <Input
+                      type="number"
+                      min="0"
+                      placeholder="0"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      value={field.value}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -202,7 +204,14 @@ export function InventoryItemForm({
                 <FormItem>
                   <FormLabel>Reorder Threshold *</FormLabel>
                   <FormControl>
-                    <Input type="number" min="0" placeholder="20" {...field} />
+                    <Input
+                      type="number"
+                      min="0"
+                      placeholder="20"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      value={field.value}
+                    />
                   </FormControl>
                   <FormDescription>Alert when quantity falls below this</FormDescription>
                   <FormMessage />
@@ -223,6 +232,8 @@ export function InventoryItemForm({
                       step="0.01"
                       placeholder="0.00"
                       {...field}
+                      onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
+                      value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormDescription>Cost per unit</FormDescription>

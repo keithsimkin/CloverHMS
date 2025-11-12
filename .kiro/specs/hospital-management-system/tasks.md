@@ -271,8 +271,15 @@
   - Add fields for severity, status, and clinical notes
   - _Requirements: 13.2, 13.3, 13.5, 13.6_
 
-- [ ] 9. Build patient visit and clinical workflow UI
-- [ ] 9.1 Build patient visit interface
+- [x] 9. Build patient visit and clinical workflow UI
+
+
+
+
+
+- [x] 9.1 Build patient visit interface
+
+
   - Create components/clinical/PatientVisitForm.tsx for documenting visits
   - Display patient history (previous symptoms, diagnoses, active prescriptions) (mock data)
   - Implement guided workflow: symptoms → diagnosis → prescription
@@ -280,29 +287,39 @@
   - Add chief complaint and visit summary fields
   - _Requirements: 14.1, 14.2_
 
-- [ ] 9.2 Integrate symptoms recording in visit
+- [x] 9.2 Integrate symptoms recording in visit
+
+
   - Add symptom selection and recording to visit form
   - Display timestamp and recording user
   - _Requirements: 11.3, 11.4_
 
-- [ ] 9.3 Integrate diagnosis recording in visit
+- [x] 9.3 Integrate diagnosis recording in visit
+
+
   - Add diagnosis selection and recording to visit form
   - Associate symptoms with diagnoses
   - Display diagnosis history for patient (mock data)
   - _Requirements: 13.2, 13.3, 13.4_
 
-- [ ] 9.4 Integrate prescription creation in visit
+- [x] 9.4 Integrate prescription creation in visit
+
+
   - Add prescription form to visit interface
   - Display prescription history for patient (mock data)
   - _Requirements: 12.3, 12.6_
 
-- [ ] 9.5 Build visit summary and reports
+- [x] 9.5 Build visit summary and reports
+
+
   - Create visit summary section with all recorded data
   - Add follow-up recommendations field
   - Implement visit report generation (print/export)
   - _Requirements: 14.3, 14.4, 14.5_
 
-- [ ] 9.6 Build clinical page
+- [x] 9.6 Build clinical page
+
+
   - Create pages/Clinical.tsx with patient search and visit interface
   - Implement start visit workflow
   - Display patient clinical history (mock data)
@@ -310,8 +327,14 @@
 
 ## Phase 5: Patient Flow Management UI
 
-- [ ] 10. Build patient flow dashboard UI
-- [ ] 10.1 Build patient flow dashboard
+- [x] 10. Build patient flow dashboard UI
+
+
+
+
+
+- [x] 10.1 Build patient flow dashboard
+
   - Create components/flow/FlowDashboard.tsx showing all patients in hospital (mock data)
   - Display patients grouped by current stage
   - Show wait time indicators for each patient
@@ -319,129 +342,194 @@
   - Add quick actions to transition patients between stages
   - _Requirements: Patient flow tracking_
 
-- [ ] 10.2 Build patient registration flow UI
+- [x] 10.2 Build patient registration flow UI
+
+
   - Create components/flow/RegistrationForm.tsx for patient arrival
   - Record arrival time
   - Link flow to patient and visit records
   - _Requirements: Patient flow - registration stage_
 
-- [ ] 11. Build triage UI
-- [ ] 11.1 Build triage interface
+- [x] 11. Build triage UI
+
+
+
+
+
+- [x] 11.1 Build triage interface
+
+
   - Create components/triage/TriageForm.tsx for triage assessment
   - Add vital signs entry (temperature, BP, heart rate, respiratory rate, O2 saturation, pain level)
   - Add priority level selection (critical, urgent, semi-urgent, non-urgent)
   - Add chief complaint field
   - _Requirements: Patient flow - triage stage_
 
-- [ ] 11.2 Build triage page
+- [x] 11.2 Build triage page
+
+
   - Create pages/Triage.tsx with queue of patients waiting for triage (mock data)
   - Display triage form for selected patient
   - Show priority-based ordering
   - _Requirements: Patient flow - triage stage_
 
-- [ ] 12. Build laboratory UI
-- [ ] 12.1 Build laboratory orders interface
+- [x] 12. Build laboratory UI
+
+
+
+
+
+- [x] 12.1 Build laboratory orders interface
+
+
   - Create components/laboratory/LabOrderForm.tsx for ordering tests
   - Add test type, test name, and priority fields
   - Track order status (ordered, sample collected, in progress, completed, cancelled)
   - _Requirements: Patient flow - laboratory stage_
 
-- [ ] 12.2 Build laboratory page
+- [x] 12.2 Build laboratory page
+
+
   - Create pages/Laboratory.tsx with pending lab orders (mock data)
   - Implement sample collection tracking interface
   - Implement results entry interface
   - Display completed results
   - _Requirements: Patient flow - laboratory stage_
 
-- [ ] 13. Build pharmacy UI
-- [ ] 13.1 Build pharmacy dispensing interface
+- [x] 13. Build pharmacy UI
+
+
+
+
+
+- [x] 13.1 Build pharmacy dispensing interface
+
+
   - Create components/pharmacy/DispenseForm.tsx for medication dispensing
   - Link to prescriptions from visits (mock data)
   - Record quantity dispensed and counseling provided
   - _Requirements: Patient flow - pharmacy stage_
 
-- [ ] 13.2 Build pharmacy page
+- [x] 13.2 Build pharmacy page
+
+
   - Create pages/Pharmacy.tsx with pending prescriptions (mock data)
   - Display prescription details
   - Implement dispense interface
   - Track dispensing history
   - _Requirements: Patient flow - pharmacy stage_
 
-- [ ] 14. Build billing UI
-- [ ] 14.1 Build billing interface
+- [x] 14. Build billing UI
+
+
+
+
+- [x] 14.1 Build billing interface
+
+
   - Create components/billing/BillingForm.tsx for generating bills
   - Calculate total from consultation fee, medication cost, laboratory cost, procedure cost
   - Track payment status (pending, partial, paid)
   - Record payment method and amount paid
   - _Requirements: Patient flow - billing stage_
 
-- [ ] 14.2 Build billing page
+- [x] 14.2 Build billing page
+
+
   - Create pages/Billing.tsx with pending bills (mock data)
   - Display bill breakdown
   - Implement payment recording interface
   - Generate receipts
   - _Requirements: Patient flow - billing stage_
 
-- [ ] 15. Build discharge UI
-- [ ] 15.1 Build discharge interface
+- [x] 15. Build discharge UI
+
+
+
+
+
+- [x] 15.1 Build discharge interface
+
   - Create components/flow/DischargeForm.tsx for patient discharge
   - Add discharge type, summary, follow-up requirements, medications, and instructions fields
   - Calculate total visit time
   - _Requirements: Patient flow - discharge stage_
 
-- [ ] 15.2 Build patient flow page
+- [x] 15.2 Build patient flow page
+
+
   - Create pages/PatientFlow.tsx with real-time flow dashboard
   - Display queue management for each stage
   - Implement stage transition controls
   - Show flow metrics and statistics (mock data)
   - _Requirements: Patient flow management_
 
+
+
 ## Phase 6: Extended Features UI
 
-- [ ] 16. Build bed management UI
-- [ ] 16.1 Build bed list and visualization
+- [x] 16. Build bed management UI
+
+
+- [x] 16.1 Build bed list and visualization
+
   - Create components/beds/BedList.tsx with table display (mock data)
   - Create components/beds/BedMap.tsx with visual floor plan
   - Implement color coding by bed status
   - Add filtering by department, floor, type, and status
   - _Requirements: 15.5, 15.6_
 
-- [ ] 16.2 Build bed allocation interface
+
+- [x] 16.2 Build bed allocation interface
+
   - Create components/beds/BedAllocationForm.tsx for assigning beds
   - Implement patient selection and bed selection
   - Add expected discharge date field
   - Display bed occupancy history (mock data)
   - _Requirements: 15.4, 15.8_
 
-- [ ] 16.3 Build bed management page
+
+- [x] 16.3 Build bed management page
+
   - Create pages/BedManagement.tsx with bed list and map
   - Implement bed allocation dialog
   - Implement bed transfer functionality
   - Display bed occupancy rates and statistics (mock data)
   - _Requirements: 15.1, 15.4, 15.5, 15.6, 15.7, 15.8, 15.9, 15.10_
 
-- [ ] 17. Build blood bank UI
-- [ ] 17.1 Build blood donor management
+- [x] 17. Build blood bank UI
+
+
+
+
+- [x] 17.1 Build blood donor management
+
   - Create components/bloodbank/DonorList.tsx with donor table (mock data)
   - Create components/bloodbank/DonorForm.tsx for donor registration
   - Display donation history for each donor
   - Track donor eligibility status
   - _Requirements: 16.1, 16.9_
 
-- [ ] 17.2 Build blood donation tracking
+
+- [x] 17.2 Build blood donation tracking
+
   - Create components/bloodbank/DonationForm.tsx for recording donations
   - Add blood type, quantity, and expiry date fields
   - Implement screening results entry
   - _Requirements: 16.3_
 
-- [ ] 17.3 Build blood inventory management
+- [x] 17.3 Build blood inventory management
+
+
   - Create components/bloodbank/BloodInventory.tsx showing stock by blood type (mock data)
   - Display low stock alerts
   - Display expiring blood units alerts
   - Implement blood usage recording
   - _Requirements: 16.4, 16.5, 16.6, 16.7_
 
-- [ ] 17.4 Build blood bank pages
+- [x] 17.4 Build blood bank pages
+
+
   - Create pages/BloodDonors.tsx for donor management
   - Create pages/BloodInventory.tsx for inventory tracking
   - Generate blood bank reports
