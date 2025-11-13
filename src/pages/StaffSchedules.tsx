@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { StaffScheduleCalendar } from '@/components/communication/StaffScheduleCalendar';
 import {
   Dialog,
@@ -181,8 +182,9 @@ export default function StaffSchedules() {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
+    <MainLayout>
+      <div className="space-y-6">
+        <div>
         <h1 className="text-3xl font-bold">Staff Schedules</h1>
         <p className="text-muted-foreground">
           View staff shifts and availability across departments
@@ -281,6 +283,7 @@ export default function StaffSchedules() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -213,8 +214,9 @@ export default function Documents() {
   const storageUsed = documents.reduce((sum, doc) => sum + doc.file_size_bytes, 0) / (1024 * 1024);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <MainLayout>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Document Management</h1>
           <p className="text-muted-foreground">
@@ -304,6 +306,7 @@ export default function Documents() {
           />
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

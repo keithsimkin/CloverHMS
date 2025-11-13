@@ -3,6 +3,7 @@
  * Provides access to user profile, agent hooks, steering rules, and system settings
  */
 
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserProfile } from '@/components/settings/UserProfile';
@@ -25,15 +26,16 @@ export default function Settings() {
   const canManageSettings = hasPermission(Permission.SETTINGS_MANAGE);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground">
-          Manage your profile, configure automation, and customize system behavior
-        </p>
-      </div>
+    <MainLayout>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
+          <p className="text-muted-foreground">
+            Manage your profile, configure automation, and customize system behavior
+          </p>
+        </div>
 
-      <Tabs defaultValue="profile" className="space-y-6">
+        <Tabs defaultValue="profile" className="space-y-6">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="profile" className="flex items-center gap-2">
             <UserCircleIcon className="h-4 w-4" />
@@ -280,6 +282,7 @@ export default function Settings() {
           )}
         </TabsContent>
       </Tabs>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

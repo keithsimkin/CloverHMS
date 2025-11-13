@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { FlowDashboard } from '@/components/flow/FlowDashboard';
 import { RegistrationForm } from '@/components/flow/RegistrationForm';
 import { DischargeForm } from '@/components/flow/DischargeForm';
@@ -222,8 +223,9 @@ export default function PatientFlow() {
   const dischargePatient = dischargeFlow ? mockPatients.find(p => p.id === dischargeFlow.patient_id) : null;
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Patient Flow Management</h1>
@@ -446,6 +448,7 @@ export default function PatientFlow() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

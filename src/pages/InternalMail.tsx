@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { InternalMailList } from '@/components/communication/InternalMailList';
 import { InternalMailForm } from '@/components/communication/InternalMailForm';
 import {
@@ -223,8 +224,9 @@ export default function InternalMail() {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
+    <MainLayout>
+      <div className="space-y-6">
+        <div>
         <h1 className="text-3xl font-bold">Internal Mail</h1>
         <p className="text-muted-foreground">
           Send and receive messages with hospital staff
@@ -327,6 +329,7 @@ export default function InternalMail() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -245,8 +246,9 @@ export default function Billing() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Billing & Payments</h1>
@@ -541,6 +543,7 @@ export default function Billing() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

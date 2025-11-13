@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { BloodInventory } from '@/components/bloodbank/BloodInventory';
 import { BloodUsageForm } from '@/components/bloodbank/BloodUsageForm';
@@ -56,9 +57,10 @@ export function BloodInventoryPage() {
     : [];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div>
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Header */}
+        <div>
         <h1 className="text-3xl font-heading font-bold">Blood Inventory</h1>
         <p className="text-muted-foreground">
           Monitor blood stock levels and manage usage
@@ -93,6 +95,7 @@ export function BloodInventoryPage() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

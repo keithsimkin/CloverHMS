@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { NoticeBoard as NoticeBoardComponent } from '@/components/communication/NoticeBoard';
 import { NoticeForm } from '@/components/communication/NoticeForm';
 import { Button } from '@/components/ui/button';
@@ -143,8 +144,9 @@ export default function NoticeBoard() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <MainLayout>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Notice Board</h1>
           <p className="text-muted-foreground">
@@ -222,6 +224,7 @@ export default function NoticeBoard() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -142,8 +143,9 @@ export default function StaffPage() {
     .map((member) => member.employee_id);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-mint-cream">Staff Management</h1>
@@ -254,6 +256,7 @@ export default function StaffPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

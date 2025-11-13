@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -320,8 +321,9 @@ export default function Laboratory() {
   );
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Laboratory</h1>
@@ -557,6 +559,7 @@ export default function Laboratory() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

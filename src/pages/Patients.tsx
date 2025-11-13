@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -147,93 +148,95 @@ export default function Patients() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Patients</h1>
-          <p className="text-muted-foreground mt-1">
-            Manage patient records and information
-          </p>
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">Patients</h1>
+            <p className="text-muted-foreground mt-1">
+              Manage patient records and information
+            </p>
+          </div>
+          {hasPermission(Permission.PATIENT_CREATE) && (
+            <Button onClick={() => setIsCreateDialogOpen(true)}>
+              <PlusIcon className="h-4 w-4 mr-2" />
+              Add Patient
+            </Button>
+          )}
         </div>
-        {hasPermission(Permission.PATIENT_CREATE) && (
-          <Button onClick={() => setIsCreateDialogOpen(true)}>
-            <PlusIcon className="h-4 w-4 mr-2" />
-            Add Patient
-          </Button>
-        )}
-      </div>
 
-      {/* Search */}
-      <PatientSearch onSearch={setSearchQuery} />
+        {/* Search */}
+        <PatientSearch onSearch={setSearchQuery} />
 
-      {/* Patient List */}
-      <PatientList
-        patients={filteredPatients}
-        onPatientSelect={handlePatientSelect}
-        onEdit={handleEditClick}
-        onDelete={handleDeletePatient}
-      />
+        {/* Patient List */}
+        <PatientList
+          patients={filteredPatients}
+          onPatientSelect={handlePatientSelect}
+          onEdit={handleEditClick}
+          onDelete={handleDeletePatient}
+        />
 
-      {/* Create Patient Dialog */}
-      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Add New Patient</DialogTitle>
-            <DialogDescription>
-              Enter the patient's information below. Fields marked with * are required.
-            </DialogDescription>
-          </DialogHeader>
-          <PatientForm
-            onSubmit={handleCreatePatient}
-            onCancel={() => setIsCreateDialogOpen(false)}
-            isSubmitting={isSubmitting}
-          />
-        </DialogContent>
-      </Dialog>
-
-      {/* Edit Patient Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Edit Patient</DialogTitle>
-            <DialogDescription>
-              Update the patient's information below. Fields marked with * are required.
-            </DialogDescription>
-          </DialogHeader>
-          {selectedPatient && (
+        {/* Create Patient Dialog */}
+        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Add New Patient</DialogTitle>
+              <DialogDescription>
+                Enter the patient's information below. Fields marked with * are required.
+              </DialogDescription>
+            </DialogHeader>
             <PatientForm
-              patient={selectedPatient}
-              onSubmit={handleUpdatePatient}
-              onCancel={() => {
-                setIsEditDialogOpen(false);
-                setSelectedPatient(null);
-              }}
+              onSubmit={handleCreatePatient}
+              onCancel={() => setIsCreateDialogOpen(false)}
               isSubmitting={isSubmitting}
             />
-          )}
-        </DialogContent>
-      </Dialog>
+          </DialogContent>
+        </Dialog>
 
-      {/* Patient Details Dialog */}
-      <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          {selectedPatient && (
-            <PatientDetails
-              patient={selectedPatient}
-              visits={[]}
-              onEdit={() => {
-                setIsDetailsDialogOpen(false);
-                setIsEditDialogOpen(true);
-              }}
-              onDelete={() => {
-                setIsDetailsDialogOpen(false);
-                handleDeletePatient(selectedPatient);
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
-    </div>
+        {/* Edit Patient Dialog */}
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Edit Patient</DialogTitle>
+              <DialogDescription>
+                Update the patient's information below. Fields marked with * are required.
+              </DialogDescription>
+            </DialogHeader>
+            {selectedPatient && (
+              <PatientForm
+                patient={selectedPatient}
+                onSubmit={handleUpdatePatient}
+                onCancel={() => {
+                  setIsEditDialogOpen(false);
+                  setSelectedPatient(null);
+                }}
+                isSubmitting={isSubmitting}
+              />
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Patient Details Dialog */}
+        <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            {selectedPatient && (
+              <PatientDetails
+                patient={selectedPatient}
+                visits={[]}
+                onEdit={() => {
+                  setIsDetailsDialogOpen(false);
+                  setIsEditDialogOpen(true);
+                }}
+                onDelete={() => {
+                  setIsDetailsDialogOpen(false);
+                  handleDeletePatient(selectedPatient);
+                }}
+              />
+            )}
+          </DialogContent>
+        </Dialog>
+      </div>
+    </MainLayout>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CaseManagement } from '@/components/emergency/CaseManagement';
 import { EmergencyCase, EmergencyCall, Ambulance, Staff } from '@/types/models';
@@ -226,8 +227,9 @@ export default function EmergencyCases() {
     (completedCases.filter((c) => c.response_time_minutes).length || 1);
 
   return (
-    <div className="space-y-6">
-      <div>
+    <MainLayout>
+      <div className="space-y-6">
+        <div>
         <h1 className="text-3xl font-bold">Emergency Case Management</h1>
         <p className="text-muted-foreground">
           Track and manage emergency cases from dispatch to completion
@@ -276,6 +278,7 @@ export default function EmergencyCases() {
         onUpdateStatus={handleUpdateStatus}
         onUpdateCase={handleUpdateCase}
       />
-    </div>
+      </div>
+    </MainLayout>
   );
 }

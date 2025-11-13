@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SymptomSearch } from '@/components/clinical/SymptomSearch';
@@ -29,8 +30,9 @@ export default function ClinicalDemo() {
   const interactions = checkDrugInteractions(selectedMedicines);
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div>
+    <MainLayout>
+      <div className="space-y-6">
+        <div>
         <h1 className="text-3xl font-heading font-bold mb-2">Clinical Knowledge Database</h1>
         <p className="text-muted-foreground">
           Comprehensive medical knowledge database for symptoms, medicines, and diagnoses
@@ -184,6 +186,7 @@ export default function ClinicalDemo() {
           )}
         </TabsContent>
       </Tabs>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

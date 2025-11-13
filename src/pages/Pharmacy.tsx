@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -219,8 +220,9 @@ export default function Pharmacy() {
   );
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Header */}
       <div>
         <h1 className="text-3xl font-bold">Pharmacy</h1>
         <p className="text-muted-foreground">Manage medication dispensing and prescription fulfillment</p>
@@ -342,6 +344,7 @@ export default function Pharmacy() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

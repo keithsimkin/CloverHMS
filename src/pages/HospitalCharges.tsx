@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { HospitalChargesConfig } from '@/components/financial/HospitalChargesConfig';
 import { HospitalCharge } from '@/types/models';
 import { useToast } from '@/hooks/use-toast';
@@ -103,8 +104,9 @@ export default function HospitalCharges() {
   };
 
   return (
-    <div className="space-y-6 p-6">
-      <div>
+    <MainLayout>
+      <div className="space-y-6">
+        <div>
         <h1 className="text-3xl font-bold">Hospital Charges Configuration</h1>
         <p className="text-muted-foreground">
           Configure and manage service pricing and hospital charges
@@ -116,6 +118,7 @@ export default function HospitalCharges() {
         onAddCharge={handleAddCharge}
         onUpdateCharge={handleUpdateCharge}
       />
-    </div>
+      </div>
+    </MainLayout>
   );
 }

@@ -5,6 +5,7 @@
  */
 
 import { useState, useMemo } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Search, Plus, FileText, Clock, User as UserIcon } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -99,8 +100,9 @@ export default function Clinical() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
+    <MainLayout>
+      <div className="space-y-6">
+        {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold">Clinical Workflow</h1>
         <p className="text-muted-foreground">
@@ -402,6 +404,7 @@ export default function Clinical() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }

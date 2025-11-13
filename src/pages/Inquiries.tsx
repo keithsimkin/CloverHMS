@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { InquiryList } from '@/components/quality/InquiryList';
 import { InquiryForm } from '@/components/quality/InquiryForm';
 import { InquiryDetails } from '@/components/quality/InquiryDetails';
@@ -99,8 +100,9 @@ export default function Inquiries() {
       inquiries.filter((i) => i.satisfaction_rating).length || 0;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <MainLayout>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Quality Management</h1>
           <p className="text-muted-foreground">
@@ -192,6 +194,7 @@ export default function Inquiries() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </MainLayout>
   );
 }
