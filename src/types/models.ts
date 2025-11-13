@@ -493,12 +493,13 @@ export interface CaseHandler {
 
 export interface InsuranceProvider {
   id: string;
-  provider_name: string;
-  contact_person: string;
-  contact_phone: string;
-  contact_email: string;
-  address: string;
-  policy_types: string[];
+  name: string;
+  contact_person?: string;
+  contact_phone?: string;
+  contact_email?: string;
+  address?: string;
+  coverage_details?: string;
+  is_active: boolean;
   created_at: Date;
   updated_at: Date;
 }
@@ -508,24 +509,26 @@ export interface PatientInsurance {
   patient_id: string;
   provider_id: string;
   policy_number: string;
-  policy_type: string;
-  coverage_percentage: number;
-  coverage_limit?: number;
-  valid_from: Date;
-  valid_until: Date;
-  status: InsuranceStatus;
+  coverage_amount: number;
+  expiry_date: Date;
+  is_active: boolean;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface InsuranceClaim {
   id: string;
+  patient_insurance_id: string;
+  provider_id: string;
   billing_record_id: string;
-  insurance_id: string;
+  claim_number: string;
+  claim_date: Date;
   claim_amount: number;
   approved_amount?: number;
-  claim_date: Date;
-  approval_date?: Date;
-  status: InsuranceClaimStatus;
-  rejection_reason?: string;
+  status: ClaimStatus;
+  notes?: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface AdvancePayment {
@@ -759,8 +762,9 @@ export interface Document {
   uploaded_by: string;
   uploaded_at: Date;
   expiry_date?: Date;
-  access_roles: Role[];
+  access_roles?: Role[];
   view_count: number;
+  download_count: number;
   status: DocumentStatus;
 }
 
@@ -788,6 +792,9 @@ export interface OPDVisit {
   consultation_fee: number;
   status: OPDVisitStatus;
   visit_notes?: string;
+  chief_complaint?: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface IPDAdmission {
@@ -805,6 +812,9 @@ export interface IPDAdmission {
   total_charges: number;
   status: IPDAdmissionStatus;
   discharge_summary?: string;
+  admission_notes?: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 // ============================================================================

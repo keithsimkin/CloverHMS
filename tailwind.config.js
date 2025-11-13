@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Base colors from design system
+        // Base colors
         'rich-black': '#0f131a',
         'gunmetal': '#232c3d',
         'prussian-blue': '#273043',
@@ -17,50 +17,47 @@ export default {
         'imperial-red': '#f02d3a',
         'rojo': '#dd0426',
         
-        // Semantic color mapping for shadcn/ui
-        background: '#0f131a',
-        foreground: '#eff6ee',
+        // Semantic color mapping
+        background: 'var(--color-background)',
+        foreground: 'var(--color-foreground)',
         card: {
-          DEFAULT: '#232c3d',
-          foreground: '#eff6ee',
+          DEFAULT: 'var(--color-card)',
+          foreground: 'var(--color-card-foreground)',
         },
         popover: {
-          DEFAULT: '#273043',
-          foreground: '#eff6ee',
+          DEFAULT: 'var(--color-popover)',
+          foreground: 'var(--color-popover-foreground)',
         },
         primary: {
-          DEFAULT: '#273043',
-          foreground: '#eff6ee',
+          DEFAULT: 'var(--color-primary)',
+          foreground: 'var(--color-primary-foreground)',
         },
         secondary: {
-          DEFAULT: '#232c3d',
-          foreground: '#eff6ee',
+          DEFAULT: 'var(--color-secondary)',
+          foreground: 'var(--color-secondary-foreground)',
         },
         muted: {
-          DEFAULT: '#232c3d',
-          foreground: '#9197ae',
+          DEFAULT: 'var(--color-muted)',
+          foreground: 'var(--color-muted-foreground)',
         },
         accent: {
-          DEFAULT: '#273043',
-          foreground: '#eff6ee',
+          DEFAULT: 'var(--color-accent)',
+          foreground: 'var(--color-accent-foreground)',
         },
         destructive: {
-          DEFAULT: '#f02d3a',
-          foreground: '#eff6ee',
+          DEFAULT: 'var(--color-destructive)',
+          foreground: 'var(--color-destructive-foreground)',
         },
-        border: '#273043',
-        input: '#232c3d',
-        ring: '#9197ae',
-        
-        // Additional utility colors
-        success: '#10b981',
-        warning: '#f59e0b',
-        info: '#3b82f6',
+        border: 'var(--color-border)',
+        input: 'var(--color-input)',
+        ring: 'var(--color-ring)',
+        success: 'var(--color-success)',
+        warning: 'var(--color-warning)',
+        info: 'var(--color-info)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         heading: ['Mona Sans', 'Inter', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
         button: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
@@ -68,7 +65,20 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      // Responsive breakpoints
+      screens: {
+        'xs': '475px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
+      // Touch-friendly spacing
+      spacing: {
+        'touch': '44px', // Minimum touch target size
+      },
     },
   },
-  plugins: [],
-}
+  plugins: [require('tailwindcss-animate')],
+};

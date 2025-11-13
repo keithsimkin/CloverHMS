@@ -32,21 +32,103 @@ export enum Permission {
 
   // Staff permissions
   STAFF_VIEW = 'staff:view',
+  STAFF_CREATE = 'staff:create',
+  STAFF_UPDATE = 'staff:update',
+  STAFF_DELETE = 'staff:delete',
   STAFF_MANAGE = 'staff:manage',
 
   // Inventory permissions
   INVENTORY_VIEW = 'inventory:view',
+  INVENTORY_CREATE = 'inventory:create',
+  INVENTORY_UPDATE = 'inventory:update',
+  INVENTORY_DELETE = 'inventory:delete',
   INVENTORY_MANAGE = 'inventory:manage',
 
   // Clinical permissions
   CLINICAL_VIEW = 'clinical:view',
   CLINICAL_RECORD = 'clinical:record',
   PRESCRIBE_MEDICINE = 'clinical:prescribe',
+  DIAGNOSIS_CREATE = 'clinical:diagnosis',
+
+  // Patient Flow permissions
+  FLOW_VIEW = 'flow:view',
+  FLOW_MANAGE = 'flow:manage',
+  TRIAGE_PERFORM = 'triage:perform',
+
+  // Laboratory permissions
+  LAB_VIEW = 'lab:view',
+  LAB_ORDER = 'lab:order',
+  LAB_MANAGE = 'lab:manage',
+  LAB_RESULTS = 'lab:results',
+
+  // Pharmacy permissions
+  PHARMACY_VIEW = 'pharmacy:view',
+  PHARMACY_DISPENSE = 'pharmacy:dispense',
+  PHARMACY_MANAGE = 'pharmacy:manage',
+
+  // Billing permissions
+  BILLING_VIEW = 'billing:view',
+  BILLING_CREATE = 'billing:create',
+  BILLING_PROCESS = 'billing:process',
+
+  // Bed Management permissions
+  BED_VIEW = 'bed:view',
+  BED_ALLOCATE = 'bed:allocate',
+  BED_MANAGE = 'bed:manage',
+
+  // Blood Bank permissions
+  BLOOD_BANK_VIEW = 'blood_bank:view',
+  BLOOD_BANK_MANAGE = 'blood_bank:manage',
+  BLOOD_DONOR_MANAGE = 'blood_bank:donor_manage',
+
+  // Emergency Services permissions
+  EMERGENCY_VIEW = 'emergency:view',
+  EMERGENCY_MANAGE = 'emergency:manage',
+  AMBULANCE_DISPATCH = 'emergency:dispatch',
+
+  // Financial permissions
+  FINANCIAL_VIEW = 'financial:view',
+  FINANCIAL_MANAGE = 'financial:manage',
+  INSURANCE_MANAGE = 'financial:insurance',
+  PAYROLL_VIEW = 'financial:payroll_view',
+  PAYROLL_MANAGE = 'financial:payroll_manage',
+
+  // Reporting permissions
+  REPORTS_VIEW = 'reports:view',
+  REPORTS_GENERATE = 'reports:generate',
+  REPORTS_EXPORT = 'reports:export',
+
+  // Communication permissions
+  COMMUNICATION_VIEW = 'communication:view',
+  COMMUNICATION_SEND = 'communication:send',
+  NOTICE_MANAGE = 'communication:notice_manage',
+
+  // Service Package permissions
+  PACKAGE_VIEW = 'package:view',
+  PACKAGE_MANAGE = 'package:manage',
+
+  // Quality Management permissions
+  INQUIRY_VIEW = 'inquiry:view',
+  INQUIRY_MANAGE = 'inquiry:manage',
+
+  // Document Management permissions
+  DOCUMENT_VIEW = 'document:view',
+  DOCUMENT_UPLOAD = 'document:upload',
+  DOCUMENT_MANAGE = 'document:manage',
+
+  // OPD/IPD permissions
+  OPD_VIEW = 'opd:view',
+  OPD_MANAGE = 'opd:manage',
+  IPD_VIEW = 'ipd:view',
+  IPD_MANAGE = 'ipd:manage',
 
   // System permissions
   SYSTEM_ADMIN = 'system:admin',
-  REPORTS_VIEW = 'reports:view',
+  USER_MANAGE = 'system:user_manage',
+  SETTINGS_VIEW = 'settings:view',
   SETTINGS_MANAGE = 'settings:manage',
+  AGENT_HOOKS_MANAGE = 'system:hooks_manage',
+  STEERING_MANAGE = 'system:steering_manage',
 }
 
 // Gender
@@ -265,6 +347,14 @@ export enum InsuranceStatus {
 export enum InsuranceClaimStatus {
   SUBMITTED = 'submitted',
   UNDER_REVIEW = 'under_review',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+  PAID = 'paid',
+}
+
+// Claim Status (alias for InsuranceClaimStatus)
+export enum ClaimStatus {
+  PENDING = 'pending',
   APPROVED = 'approved',
   REJECTED = 'rejected',
   PAID = 'paid',

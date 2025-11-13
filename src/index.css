@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -15,62 +13,65 @@
   font-display: swap;
 }
 
-@layer base {
-  :root {
-    /* Color variables */
-    --background: 15 19 26; /* #0f131a - Rich Black */
-    --foreground: 239 246 238; /* #eff6ee - Mint Cream */
-    
-    --card: 35 44 61; /* #232c3d - Gunmetal */
-    --card-foreground: 239 246 238; /* #eff6ee - Mint Cream */
-    
-    --popover: 39 48 67; /* #273043 - Prussian Blue */
-    --popover-foreground: 239 246 238; /* #eff6ee - Mint Cream */
-    
-    --primary: 39 48 67; /* #273043 - Prussian Blue */
-    --primary-foreground: 239 246 238; /* #eff6ee - Mint Cream */
-    
-    --secondary: 35 44 61; /* #232c3d - Gunmetal */
-    --secondary-foreground: 239 246 238; /* #eff6ee - Mint Cream */
-    
-    --muted: 35 44 61; /* #232c3d - Gunmetal */
-    --muted-foreground: 145 151 174; /* #9197ae - Cool Gray */
-    
-    --accent: 39 48 67; /* #273043 - Prussian Blue */
-    --accent-foreground: 239 246 238; /* #eff6ee - Mint Cream */
-    
-    --destructive: 240 45 58; /* #f02d3a - Imperial Red */
-    --destructive-foreground: 239 246 238; /* #eff6ee - Mint Cream */
-    
-    --border: 39 48 67; /* #273043 - Prussian Blue */
-    --input: 35 44 61; /* #232c3d - Gunmetal */
-    --ring: 145 151 174; /* #9197ae - Cool Gray */
-    
-    --radius: 0.5rem;
-    
-    /* Success, warning, info colors */
-    --success: 16 185 129; /* #10b981 */
-    --warning: 245 158 11; /* #f59e0b */
-    --info: 59 130 246; /* #3b82f6 */
-  }
+@theme {
+  /* Color variables */
+  --color-rich-black: #0f131a;
+  --color-gunmetal: #232c3d;
+  --color-prussian-blue: #273043;
+  --color-cool-gray: #9197ae;
+  --color-mint-cream: #eff6ee;
+  --color-imperial-red: #f02d3a;
+  --color-rojo: #dd0426;
   
+  --color-background: #0f131a;
+  --color-foreground: #eff6ee;
+  --color-card: #232c3d;
+  --color-card-foreground: #eff6ee;
+  --color-popover: #273043;
+  --color-popover-foreground: #eff6ee;
+  --color-primary: #273043;
+  --color-primary-foreground: #eff6ee;
+  --color-secondary: #232c3d;
+  --color-secondary-foreground: #eff6ee;
+  --color-muted: #232c3d;
+  --color-muted-foreground: #9197ae;
+  --color-accent: #273043;
+  --color-accent-foreground: #eff6ee;
+  --color-destructive: #f02d3a;
+  --color-destructive-foreground: #eff6ee;
+  --color-border: #273043;
+  --color-input: #232c3d;
+  --color-ring: #9197ae;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+  
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+  --font-family-heading: 'Mona Sans', 'Inter', system-ui, sans-serif;
+  --font-family-button: 'Poppins', 'Inter', system-ui, sans-serif;
+  
+  --radius: 0.5rem;
+}
+
+@layer base {
   * {
-    @apply border-border;
+    border-color: var(--color-border);
   }
   
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-family-sans);
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Mona Sans', 'Inter', system-ui, sans-serif;
+    font-family: var(--font-family-heading);
     font-weight: 600;
   }
   
   button {
-    font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+    font-family: var(--font-family-button);
   }
 }
 
@@ -82,15 +83,16 @@
   }
   
   .scrollbar-thin::-webkit-scrollbar-track {
-    @apply bg-gunmetal;
+    background-color: var(--color-gunmetal);
   }
   
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-prussian-blue rounded;
+    background-color: var(--color-prussian-blue);
+    border-radius: 0.25rem;
   }
   
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    @apply bg-cool-gray;
+    background-color: var(--color-cool-gray);
   }
   
   /* Text utilities */

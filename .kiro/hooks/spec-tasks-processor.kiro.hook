@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Spec Tasks Processor",
+  "description": "Monitors spec task files and automatically processes all remaining tasks following agent steering guidelines and project specifications",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": []
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review all remaining tasks in the spec files that were just modified. Go through each task systematically from the current position to the last task about UI. Follow the agent steering rules and project specifications (tech.md, structure.md, product.md) while implementing each task. Ensure all implementations align with the HMS architecture, use the correct technology stack (React, TypeScript, Tauri, Supabase), follow the established patterns (services layer, custom hooks, Zustand stores), and maintain the design philosophy (dark theme, color palette, typography). Process tasks in order and implement them according to the clinical workflow requirements."
+  }
+}

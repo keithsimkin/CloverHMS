@@ -12,6 +12,8 @@ import { Badge } from '@/components/ui/badge';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import type { Patient } from '@/types/models';
 import { format } from 'date-fns';
+import { usePermissions } from '@/hooks/usePermissions';
+import { Permission } from '@/types/enums';
 
 interface PatientListProps {
   patients: Patient[];
@@ -31,6 +33,7 @@ export function PatientList({
   onDelete,
 }: PatientListProps) {
   const [currentPage, setCurrentPage] = useState(1);
+  const { hasPermission } = usePermissions();
 
   const totalPages = Math.ceil(patients.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -124,7 +127,7 @@ export function PatientList({
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    {onEdit && (
+                    {onEdit && hasPermission(Permission.PATIENT_UPDATE) && (
                       <Button
                         variant="ghost"
                         size="sm"
@@ -136,7 +139,7 @@ export function PatientList({
                         Edit
                       </Button>
                     )}
-                    {onDelete && (
+                    {onDelete && hasPermission(Permission.PATIENT_DELETE) && (
                       <Button
                         variant="ghost"
                         size="sm"

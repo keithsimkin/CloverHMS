@@ -7,18 +7,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { useToast } from '@/hooks/use-toast';
 import { PatientList } from '@/components/patients/PatientList';
 import { PatientSearch } from '@/components/patients/PatientSearch';
 import { PatientForm } from '@/components/patients/PatientForm';
 import { PatientDetails } from '@/components/patients/PatientDetails';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { generateMockPatients, generateMockPatientVisits } from '@/lib/mockData';
+import { generateMockPatients } from '@/lib/mockData';
 import type { Patient } from '@/types/models';
-import { Gender } from '@/types/enums';
+import { Gender, Permission } from '@/types/enums';
+import { usePermissions } from '@/hooks/usePermissions';
+import { crudToasts } from '@/lib/toastUtils';
 
 export default function Patients() {
-  const { toast } = useToast();
+  const { hasPermission } = usePermissions();
   const [patients, setPatients] = useState<Patient[]>(() => generateMockPatients(50));
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
@@ -71,16 +72,9 @@ export default function Patients() {
       setPatients((prev) => [newPatient, ...prev]);
       setIsCreateDialogOpen(false);
 
-      toast({
-        title: 'Patient created',
-        description: `${newPatient.first_name} ${newPatient.last_name} has been added successfully.`,
-      });
+      crudToasts.createSuccess('Patient');
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to create patient. Please try again.',
-        variant: 'destructive',
-      });
+      crudToasts.createError('Patient', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -117,16 +111,9 @@ export default function Patients() {
       setIsEditDialogOpen(false);
       setSelectedPatient(null);
 
-      toast({
-        title: 'Patient updated',
-        description: `${updatedPatient.first_name} ${updatedPatient.last_name} has been updated successfully.`,
-      });
+      crudToasts.updateSuccess('Patient');
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to update patient. Please try again.',
-        variant: 'destructive',
-      });
+      crudToasts.updateError('Patient', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -143,16 +130,9 @@ export default function Patients() {
 
       setPatients((prev) => prev.filter((p) => p.id !== patient.id));
 
-      toast({
-        title: 'Patient deleted',
-        description: `${patient.first_name} ${patient.last_name} has been removed.`,
-      });
+      crudToasts.deleteSuccess('Patient');
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to delete patient. Please try again.',
-        variant: 'destructive',
-      });
+      crudToasts.deleteError('Patient', error);
     }
   };
 
@@ -176,10 +156,12 @@ export default function Patients() {
             Manage patient records and information
           </p>
         </div>
-        <Button onClick={() => setIsCreateDialogOpen(true)}>
-          <PlusIcon className="h-4 w-4 mr-2" />
-          Add Patient
-        </Button>
+        {hasPermission(Permission.PATIENT_CREATE) && (
+          <Button onClick={() => setIsCreateDialogOpen(true)}>
+            <PlusIcon className="h-4 w-4 mr-2" />
+            Add Patient
+          </Button>
+        )}
       </div>
 
       {/* Search */}
@@ -239,7 +221,7 @@ export default function Patients() {
           {selectedPatient && (
             <PatientDetails
               patient={selectedPatient}
-              visits={generateMockPatientVisits(selectedPatient.id, 5)}
+              visits={[]}
               onEdit={() => {
                 setIsDetailsDialogOpen(false);
                 setIsEditDialogOpen(true);

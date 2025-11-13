@@ -1,4 +1,5 @@
-import { Bell, LogOut, User, ChevronRight } from 'lucide-react';
+import { Bell, LogOut, User, ChevronRight, Menu } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,6 +10,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { useAuthStore } from '@/stores/authStore';
+import { getUserFullName, getUserInitials, getRoleDisplayName } from '@/lib/auth';
 
 interface BreadcrumbItem {
   label: string;
@@ -17,68 +20,86 @@ interface BreadcrumbItem {
 
 interface HeaderProps {
   breadcrumbs?: BreadcrumbItem[];
+  onMenuClick?: () => void;
 }
 
-export function Header({ breadcrumbs = [] }: HeaderProps) {
-  // Mock user data - will be replaced with real auth data later
-  const user = {
-    name: 'Dr. John Smith',
-    email: 'john.smith@hospital.com',
-    role: 'Doctor',
-  };
+export function Header({ breadcrumbs = [], onMenuClick }: HeaderProps) {
+  const navigate = useNavigate();
+  const { user, logout } = useAuthStore();
 
   const notificationCount = 3; // Mock notification count
 
   const handleLogout = () => {
-    // TODO: Implement logout logic
-    console.log('Logout clicked');
+    logout();
+    navigate({ to: '/login' });
   };
 
   const handleProfile = () => {
-    // TODO: Navigate to profile page
-    console.log('Profile clicked');
+    navigate({ to: '/settings' });
   };
 
+  if (!user) {
+    return null;
+  }
+
+  const userName = getUserFullName();
+  const userInitials = getUserInitials();
+  const userRole = getRoleDisplayName(user.role);
+
   return (
-    <header className="flex items-center justify-between h-16 px-6 bg-gunmetal border-b border-border">
-      {/* Breadcrumbs */}
-      <div className="flex items-center gap-2">
-        {breadcrumbs.length > 0 ? (
-          <nav className="flex items-center gap-2 text-sm">
-            {breadcrumbs.map((item, index) => (
-              <div key={index} className="flex items-center gap-2">
-                {index > 0 && (
-                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                )}
-                {item.href ? (
-                  <a
-                    href={item.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <span className="text-foreground font-medium">
-                    {item.label}
-                  </span>
-                )}
-              </div>
-            ))}
-          </nav>
-        ) : (
-          <div className="text-sm text-muted-foreground">
-            Welcome to Hospital Management System
-          </div>
-        )}
+    <header className="flex items-center justify-between h-16 px-4 sm:px-6 bg-gunmetal border-b border-border">
+      {/* Mobile Menu Button + Breadcrumbs */}
+      <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+        {/* Mobile menu button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onMenuClick}
+          className="lg:hidden flex-shrink-0"
+          aria-label="Open menu"
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+
+        {/* Breadcrumbs */}
+        <div className="flex items-center gap-2 min-w-0">
+          {breadcrumbs.length > 0 ? (
+            <nav className="flex items-center gap-2 text-sm min-w-0">
+              {breadcrumbs.map((item, index) => (
+                <div key={index} className="flex items-center gap-2 min-w-0">
+                  {index > 0 && (
+                    <ChevronRight className="w-4 h-4 text-muted-foreground hidden sm:block flex-shrink-0" />
+                  )}
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="text-muted-foreground hover:text-foreground transition-colors hidden sm:inline truncate"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <span className="text-foreground font-medium truncate">
+                      {item.label}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </nav>
+          ) : (
+            <div className="text-sm text-muted-foreground hidden md:block truncate">
+              Welcome to Hospital Management System
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Right side - Notifications and User Menu */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
         {/* Notifications */}
         <Button
           variant="ghost"
           size="icon"
-          className="relative"
+          className="relative flex-shrink-0"
           aria-label="Notifications"
         >
           <Bell className="w-5 h-5" />
@@ -97,15 +118,15 @@ export function Header({ breadcrumbs = [] }: HeaderProps) {
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="flex items-center gap-2 px-3"
+              className="flex items-center gap-2 px-2 sm:px-3 flex-shrink-0"
             >
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-prussian-blue">
-                <User className="w-4 h-4" />
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-prussian-blue text-sm font-medium flex-shrink-0">
+                {userInitials}
               </div>
-              <div className="hidden md:flex flex-col items-start">
-                <span className="text-sm font-medium">{user.name}</span>
-                <span className="text-xs text-muted-foreground">
-                  {user.role}
+              <div className="hidden xl:flex flex-col items-start">
+                <span className="text-sm font-medium truncate max-w-[120px]">{userName}</span>
+                <span className="text-xs text-muted-foreground truncate max-w-[120px]">
+                  {userRole}
                 </span>
               </div>
             </Button>
@@ -113,7 +134,7 @@ export function Header({ breadcrumbs = [] }: HeaderProps) {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium">{user.name}</p>
+                <p className="text-sm font-medium">{userName}</p>
                 <p className="text-xs text-muted-foreground">{user.email}</p>
               </div>
             </DropdownMenuLabel>
@@ -122,7 +143,7 @@ export function Header({ breadcrumbs = [] }: HeaderProps) {
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log('Settings')}>
+            <DropdownMenuItem onClick={() => navigate({ to: '/settings' })}>
               <span>Settings</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
