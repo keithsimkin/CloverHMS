@@ -24,6 +24,7 @@ import {
   Building2,
   Settings,
   X,
+  AlertTriangle,
 } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
@@ -130,15 +131,33 @@ const navigationSections: NavSection[] = [
         requiredPermissions: [Permission.BED_VIEW],
       },
       { 
-        title: 'Blood Bank', 
+        title: 'Blood Donors', 
+        href: '/blood-donors', 
+        icon: Droplet,
+        requiredPermissions: [Permission.BLOOD_BANK_VIEW],
+      },
+      { 
+        title: 'Blood Inventory', 
         href: '/blood-bank', 
         icon: Droplet,
         requiredPermissions: [Permission.BLOOD_BANK_VIEW],
       },
       { 
-        title: 'Emergency', 
-        href: '/emergency', 
+        title: 'Ambulances', 
+        href: '/ambulances', 
         icon: Ambulance,
+        requiredPermissions: [Permission.EMERGENCY_VIEW],
+      },
+      { 
+        title: 'Emergency Calls', 
+        href: '/emergency-calls', 
+        icon: Siren,
+        requiredPermissions: [Permission.EMERGENCY_VIEW],
+      },
+      { 
+        title: 'Emergency Cases', 
+        href: '/emergency-cases', 
+        icon: AlertTriangle,
         requiredPermissions: [Permission.EMERGENCY_VIEW],
       },
       { 
@@ -165,8 +184,26 @@ const navigationSections: NavSection[] = [
         requiredPermissions: [Permission.FINANCIAL_VIEW],
       },
       { 
+        title: 'Advance Payments', 
+        href: '/advance-payments', 
+        icon: DollarSign,
+        requiredPermissions: [Permission.FINANCIAL_VIEW],
+      },
+      { 
         title: 'Expenses', 
         href: '/expenses', 
+        icon: DollarSign,
+        requiredPermissions: [Permission.FINANCIAL_VIEW],
+      },
+      { 
+        title: 'Income', 
+        href: '/income', 
+        icon: DollarSign,
+        requiredPermissions: [Permission.FINANCIAL_VIEW],
+      },
+      { 
+        title: 'Hospital Charges', 
+        href: '/hospital-charges', 
         icon: DollarSign,
         requiredPermissions: [Permission.FINANCIAL_VIEW],
       },
@@ -179,20 +216,49 @@ const navigationSections: NavSection[] = [
     ],
   },
   {
-    title: 'Management',
+    title: 'Reports & Communication',
     items: [
       { 
-        title: 'Reports', 
-        href: '/reports', 
+        title: 'Birth Reports', 
+        href: '/birth-reports', 
         icon: FileText,
         requiredPermissions: [Permission.REPORTS_VIEW],
       },
       { 
-        title: 'Communication', 
-        href: '/communication', 
+        title: 'Death Reports', 
+        href: '/death-reports', 
+        icon: FileText,
+        requiredPermissions: [Permission.REPORTS_VIEW],
+      },
+      { 
+        title: 'Operation Reports', 
+        href: '/operation-reports', 
+        icon: FileText,
+        requiredPermissions: [Permission.REPORTS_VIEW],
+      },
+      { 
+        title: 'Notice Board', 
+        href: '/notice-board', 
         icon: MessageSquare,
         requiredPermissions: [Permission.COMMUNICATION_VIEW],
       },
+      { 
+        title: 'Internal Mail', 
+        href: '/internal-mail', 
+        icon: MessageSquare,
+        requiredPermissions: [Permission.COMMUNICATION_VIEW],
+      },
+      { 
+        title: 'Staff Schedules', 
+        href: '/staff-schedules', 
+        icon: Calendar,
+        requiredPermissions: [Permission.COMMUNICATION_VIEW],
+      },
+    ],
+  },
+  {
+    title: 'Services & Quality',
+    items: [
       { 
         title: 'Service Packages', 
         href: '/packages', 
@@ -200,7 +266,13 @@ const navigationSections: NavSection[] = [
         requiredPermissions: [Permission.PACKAGE_VIEW],
       },
       { 
-        title: 'Quality', 
+        title: 'Doctor Charges', 
+        href: '/doctor-charges', 
+        icon: DollarSign,
+        requiredPermissions: [Permission.PACKAGE_VIEW],
+      },
+      { 
+        title: 'Inquiries', 
         href: '/quality', 
         icon: HelpCircle,
         requiredPermissions: [Permission.INQUIRY_VIEW],
