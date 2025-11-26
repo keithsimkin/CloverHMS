@@ -23,13 +23,14 @@ import { StaffList } from '@/components/staff/StaffList';
 import { StaffForm } from '@/components/staff/StaffForm';
 import { StaffSchedule } from '@/components/staff/StaffSchedule';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { generateMockStaffMembers, generateMockStaffSchedules } from '@/lib/mockData';
+import { generateMockStaffSchedules } from '@/lib/mockData';
+import { getCachedStaff, mockDataCache } from '@/lib/mockDataCache';
 import type { Staff } from '@/types/models';
 import { EmploymentStatus } from '@/types/enums';
 
 export default function StaffPage() {
   const { toast } = useToast();
-  const [staff, setStaff] = useState<Staff[]>(() => generateMockStaffMembers(30));
+  const [staff, setStaff] = useState<Staff[]>(() => getCachedStaff());
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);

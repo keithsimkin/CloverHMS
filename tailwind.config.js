@@ -8,14 +8,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Base colors
-        'rich-black': '#0f131a',
-        'gunmetal': '#232c3d',
-        'prussian-blue': '#273043',
-        'cool-gray': '#9197ae',
-        'mint-cream': '#eff6ee',
-        'imperial-red': '#f02d3a',
-        'rojo': '#dd0426',
+        // Base colors - White & Black theme
+        'rich-black': '#000000',
+        'gunmetal': '#1a1a1a',
+        'prussian-blue': '#333333',
+        'cool-gray': '#666666',
+        'mint-cream': '#ffffff',
+        'imperial-red': '#000000',
+        'rojo': '#000000',
         
         // Semantic color mapping
         background: 'var(--color-background)',
@@ -54,6 +54,16 @@ export default {
         success: 'var(--color-success)',
         warning: 'var(--color-warning)',
         info: 'var(--color-info)',
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -80,5 +90,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [],
 };

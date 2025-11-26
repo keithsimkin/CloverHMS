@@ -1,4 +1,4 @@
-import { Bell, LogOut, User, ChevronRight, Menu } from 'lucide-react';
+import { Bell, LogOut, User, ChevronRight } from 'lucide-react';
 import { useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,6 +12,9 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { useAuthStore } from '@/stores/authStore';
 import { getUserFullName, getUserInitials, getRoleDisplayName } from '@/lib/auth';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { Separator } from '@/components/ui/separator';
+import { ThemeToggle } from '@/components/common/ThemeToggle';
 
 interface BreadcrumbItem {
   label: string;
@@ -20,10 +23,9 @@ interface BreadcrumbItem {
 
 interface HeaderProps {
   breadcrumbs?: BreadcrumbItem[];
-  onMenuClick?: () => void;
 }
 
-export function Header({ breadcrumbs = [], onMenuClick }: HeaderProps) {
+export function Header({ breadcrumbs = [] }: HeaderProps) {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
 
@@ -47,54 +49,46 @@ export function Header({ breadcrumbs = [], onMenuClick }: HeaderProps) {
   const userRole = getRoleDisplayName(user.role);
 
   return (
-    <header className="flex items-center justify-between h-16 px-4 sm:px-6 bg-gunmetal border-b border-border">
-      {/* Mobile Menu Button + Breadcrumbs */}
-      <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-        {/* Mobile menu button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onMenuClick}
-          className="lg:hidden flex-shrink-0"
-          aria-label="Open menu"
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
+    <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+      <div className="flex items-center gap-2 flex-1 min-w-0">
+        <SidebarTrigger className="-ml-1" />
+        <Separator orientation="vertical" className="mr-2 h-4" />
 
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 min-w-0">
-          {breadcrumbs.length > 0 ? (
-            <nav className="flex items-center gap-2 text-sm min-w-0">
-              {breadcrumbs.map((item, index) => (
-                <div key={index} className="flex items-center gap-2 min-w-0">
-                  {index > 0 && (
-                    <ChevronRight className="w-4 h-4 text-muted-foreground hidden sm:block flex-shrink-0" />
-                  )}
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors hidden sm:inline truncate"
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    <span className="text-foreground font-medium truncate">
-                      {item.label}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </nav>
-          ) : (
-            <div className="text-sm text-muted-foreground hidden md:block truncate">
-              Welcome to Hospital Management System
-            </div>
-          )}
-        </div>
+        {breadcrumbs.length > 0 ? (
+          <nav className="flex items-center gap-2 text-sm min-w-0">
+            {breadcrumbs.map((item, index) => (
+              <div key={index} className="flex items-center gap-2 min-w-0">
+                {index > 0 && (
+                  <ChevronRight className="w-4 h-4 text-muted-foreground hidden sm:block flex-shrink-0" />
+                )}
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors hidden sm:inline truncate"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <span className="text-foreground font-medium truncate">
+                    {item.label}
+                  </span>
+                )}
+              </div>
+            ))}
+          </nav>
+        ) : (
+          <div className="text-sm text-muted-foreground hidden md:block truncate">
+            Welcome to Hospital Management System
+          </div>
+        )}
       </div>
 
-      {/* Right side - Notifications and User Menu */}
+      {/* Right side - Theme Toggle, Notifications and User Menu */}
       <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+        {/* Theme Toggle */}
+        <ThemeToggle />
+
         {/* Notifications */}
         <Button
           variant="ghost"

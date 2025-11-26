@@ -22,13 +22,6 @@ import { usePermissions } from '@/hooks/usePermissions';
 import { Permission } from '@/types/enums';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import {
-  generateMockPatients,
-  generateMockStaff,
-  generateMockBeds,
-  calculateBloodInventory,
-  generateMockBloodDonations,
-  generateMockBloodDonors,
-  generateMockInquiries,
   generateMockDashboardStats,
   generateMockAppointmentData,
   generateMockPatientDemographics,
@@ -36,28 +29,24 @@ import {
   generateMockFinancialData,
   generateMockEmergencyData,
 } from '@/lib/mockData';
+import {
+  getCachedPatients,
+  getCachedStaff,
+  getCachedBeds,
+  getCachedBloodInventory,
+  getCachedInquiries,
+} from '@/lib/mockDataCache';
 
 export function Dashboard() {
   const [dateRange, setDateRange] = useState<'7days' | '30days' | '90days'>('30days');
   const { role } = usePermissions();
 
-  // Generate mock data
-  const mockPatients = useMemo(() => generateMockPatients(150), []);
-  const mockStaff = useMemo(() => generateMockStaff(25), []);
-  const mockBeds = useMemo(() => generateMockBeds(), []);
-  const mockBloodDonors = useMemo(() => generateMockBloodDonors(50), []);
-  const mockBloodDonations = useMemo(
-    () => generateMockBloodDonations(mockBloodDonors),
-    [mockBloodDonors]
-  );
-  const mockBloodInventory = useMemo(
-    () => calculateBloodInventory(mockBloodDonations),
-    [mockBloodDonations]
-  );
-  const mockInquiries = useMemo(
-    () => generateMockInquiries(mockPatients, mockStaff),
-    [mockPatients, mockStaff]
-  );
+  // Get cached mock data (instant access)
+  const mockPatients = getCachedPatients();
+  const mockStaff = getCachedStaff();
+  const mockBeds = getCachedBeds();
+  const mockBloodInventory = getCachedBloodInventory();
+  const mockInquiries = getCachedInquiries();
 
   // Dashboard statistics
   const dashboardStats = useMemo(

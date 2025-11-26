@@ -1,6 +1,6 @@
 /**
  * Login Page
- * Provides authentication interface with email/password form
+ * Provides authentication interface with email/password form using shadcn login-05 design
  */
 
 import { useState } from 'react';
@@ -11,11 +11,11 @@ import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuthStore } from '@/stores/authStore';
 import { getLockoutTimeRemaining } from '@/lib/auth';
-import { AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2, Activity } from 'lucide-react';
+import { TauriTitleBar } from '@/components/layout/TauriTitleBar';
 
 // Validation schema
 const loginSchema = z.object({
@@ -53,19 +53,24 @@ export default function Login() {
   const lockoutTime = getLockoutTimeRemaining();
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-heading text-center">
-            Hospital Management System
-          </CardTitle>
-          <CardDescription className="text-center">
-            Enter your credentials to access the system
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Error Alert */}
+    <>
+      <TauriTitleBar />
+      <div className="flex min-h-screen items-center justify-center bg-background p-4 pt-12">
+      <div className="w-full max-w-sm">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-6">
+            {/* Header */}
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary">
+                <Activity className="size-6 text-primary-foreground" />
+              </div>
+              <h1 className="text-xl font-bold font-heading">Hospital Management System</h1>
+              <div className="text-center text-sm text-muted-foreground">
+                Enter your credentials to access the system
+              </div>
+            </div>
+
+            {/* Error Alerts */}
             {error && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
@@ -73,7 +78,6 @@ export default function Login() {
               </Alert>
             )}
 
-            {/* Account Locked Alert */}
             {accountLocked && lockoutTime && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
@@ -83,58 +87,60 @@ export default function Login() {
               </Alert>
             )}
 
-            {/* Email Field */}
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="user@hospital.com"
+            {/* Form Fields */}
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="user@hospital.com"
+                  disabled={isLoading || accountLocked}
+                  {...register('email')}
+                />
+                {errors.email && (
+                  <p className="text-sm text-destructive">{errors.email.message}</p>
+                )}
+              </div>
+
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  disabled={isLoading || accountLocked}
+                  {...register('password')}
+                />
+                {errors.password && (
+                  <p className="text-sm text-destructive">{errors.password.message}</p>
+                )}
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full"
                 disabled={isLoading || accountLocked}
-                {...register('email')}
-              />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
-              )}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Signing in...
+                  </>
+                ) : (
+                  'Login'
+                )}
+              </Button>
             </div>
 
-            {/* Password Field */}
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                disabled={isLoading || accountLocked}
-                {...register('password')}
-              />
-              {errors.password && (
-                <p className="text-sm text-destructive">{errors.password.message}</p>
-              )}
+            {/* Divider */}
+            <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+              <span className="relative z-10 bg-background px-2 text-muted-foreground">
+                Demo Credentials
+              </span>
             </div>
 
-            {/* Submit Button */}
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isLoading || accountLocked}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Signing in...
-                </>
-              ) : (
-                'Sign In'
-              )}
-            </Button>
-          </form>
-
-          {/* Demo Credentials */}
-          <div className="mt-6 pt-6 border-t border-border">
-            <p className="text-sm text-muted-foreground text-center mb-3">
-              Demo Credentials:
-            </p>
+            {/* Demo Credentials */}
             <div className="space-y-2 text-xs text-muted-foreground">
               <div className="flex justify-between">
                 <span>Admin:</span>
@@ -154,8 +160,9 @@ export default function Login() {
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </form>
+      </div>
     </div>
+    </>
   );
 }

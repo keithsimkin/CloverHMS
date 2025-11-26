@@ -14,7 +14,14 @@
       {
         "title": "Clover HMS",
         "width": 1280,
-        "height": 800
+        "height": 800,
+        "minWidth": 1024,
+        "minHeight": 600,
+        "decorations": true,
+        "transparent": false,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": false,
+        "theme": "Light"
       }
     ],
     "security": {

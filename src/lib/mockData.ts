@@ -6,12 +6,20 @@ import {
   Bed,
   BedAllocation,
   Patient,
+  PatientVisit,
+  PatientFlow,
+  TriageRecord,
+  LaboratoryOrder,
 } from '@/types/models';
 import {
   BedStatus,
   BedType,
   Gender,
   BloodType,
+  VisitType,
+  FlowStage,
+  PriorityLevel,
+  LabOrderStatus,
 } from '@/types/enums';
 
 // Generate mock patients
@@ -38,6 +46,149 @@ export function generateMockPatients(count: number = 20): Patient[] {
     updated_at: new Date(),
     created_by: 'system',
   }));
+}
+
+// Generate a single mock patient
+export function generateMockPatient(): Patient {
+  return generateMockPatients(1)[0];
+}
+
+// Generate mock patient visit
+export function generateMockPatientVisit(patientId: string): PatientVisit {
+  const visitTypes = Object.values(VisitType);
+  const complaints = [
+    'Fever and cough',
+    'Chest pain',
+    'Abdominal pain',
+    'Headache',
+    'Back pain',
+    'Shortness of breath',
+    'Dizziness',
+    'Nausea and vomiting',
+  ];
+
+  return {
+    id: `visit-${patientId}-${Date.now()}`,
+    patient_id: patientId,
+    provider_id: `staff-${Math.floor(Math.random() * 10) + 1}`,
+    visit_date: new Date(),
+    visit_type: visitTypes[Math.floor(Math.random() * visitTypes.length)],
+    chief_complaint: complaints[Math.floor(Math.random() * complaints.length)],
+    vital_signs: {
+      temperature: 36.5 + Math.random() * 2,
+      blood_pressure: `${110 + Math.floor(Math.random() * 30)}/${70 + Math.floor(Math.random() * 20)}`,
+      heart_rate: 60 + Math.floor(Math.random() * 40),
+      respiratory_rate: 12 + Math.floor(Math.random() * 8),
+      oxygen_saturation: 95 + Math.floor(Math.random() * 5),
+      pain_level: Math.floor(Math.random() * 11),
+    },
+    created_at: new Date(),
+    updated_at: new Date(),
+  };
+}
+
+// Generate mock patient flow
+export function generateMockPatientFlow(
+  patientId: string,
+  visitId: string,
+  options?: Partial<PatientFlow>
+): PatientFlow {
+  const stages = Object.values(FlowStage);
+  const arrivalTime = new Date();
+  arrivalTime.setHours(arrivalTime.getHours() - Math.floor(Math.random() * 4));
+
+  return {
+    id: `flow-${patientId}-${Date.now()}`,
+    patient_id: patientId,
+    visit_id: visitId,
+    current_stage: options?.current_stage || stages[Math.floor(Math.random() * stages.length)],
+    arrival_time: options?.arrival_time || arrivalTime,
+    discharge_time: options?.discharge_time,
+    total_wait_time_minutes: Math.floor(Math.random() * 120) + 10,
+    created_at: new Date(),
+    updated_at: new Date(),
+    ...options,
+  };
+}
+
+// Generate mock triage record
+export function generateMockTriageRecord(patientId: string, flowId: string): TriageRecord {
+  const priorities = Object.values(PriorityLevel);
+  const complaints = [
+    'Severe chest pain',
+    'Difficulty breathing',
+    'High fever',
+    'Severe headache',
+    'Abdominal pain',
+    'Injury from fall',
+    'Allergic reaction',
+    'Persistent cough',
+  ];
+
+  return {
+    id: `triage-${flowId}`,
+    patient_id: patientId,
+    flow_id: flowId,
+    priority_level: priorities[Math.floor(Math.random() * priorities.length)],
+    chief_complaint: complaints[Math.floor(Math.random() * complaints.length)],
+    vital_signs: {
+      temperature: 36.5 + Math.random() * 2,
+      blood_pressure: `${110 + Math.floor(Math.random() * 30)}/${70 + Math.floor(Math.random() * 20)}`,
+      heart_rate: 60 + Math.floor(Math.random() * 40),
+      respiratory_rate: 12 + Math.floor(Math.random() * 8),
+      oxygen_saturation: 95 + Math.floor(Math.random() * 5),
+      pain_level: Math.floor(Math.random() * 11),
+    },
+    triage_notes: 'Patient appears stable',
+    triaged_by: `staff-${Math.floor(Math.random() * 10) + 1}`,
+    triaged_at: new Date(),
+  };
+}
+
+// Generate mock laboratory order
+export function generateMockLaboratoryOrder(
+  patientId: string,
+  visitId: string,
+  flowId: string
+): LaboratoryOrder {
+  const tests = [
+    { type: 'Blood Test', name: 'Complete Blood Count (CBC)' },
+    { type: 'Blood Test', name: 'Blood Glucose' },
+    { type: 'Blood Test', name: 'Lipid Profile' },
+    { type: 'Blood Test', name: 'Liver Function Test' },
+    { type: 'Blood Test', name: 'Kidney Function Test' },
+    { type: 'Blood Test', name: 'Thyroid Function Test' },
+    { type: 'Urine Test', name: 'Urinalysis' },
+    { type: 'Imaging', name: 'X-Ray Chest' },
+    { type: 'Cardiac', name: 'ECG' },
+    { type: 'Imaging', name: 'Ultrasound Abdomen' },
+  ];
+  const statuses = Object.values(LabOrderStatus);
+  const priorities: ('routine' | 'urgent' | 'stat')[] = ['routine', 'urgent', 'stat'];
+
+  const orderedAt = new Date();
+  orderedAt.setHours(orderedAt.getHours() - Math.floor(Math.random() * 24));
+
+  const status = statuses[Math.floor(Math.random() * statuses.length)];
+  const hasResults = status === LabOrderStatus.COMPLETED;
+  const test = tests[Math.floor(Math.random() * tests.length)];
+
+  return {
+    id: `lab-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    patient_id: patientId,
+    visit_id: visitId,
+    flow_id: flowId,
+    test_type: test.type,
+    test_name: test.name,
+    ordered_by: `staff-${Math.floor(Math.random() * 10) + 1}`,
+    ordered_at: orderedAt,
+    status,
+    priority: priorities[Math.floor(Math.random() * priorities.length)],
+    sample_collected_at: status !== LabOrderStatus.ORDERED ? new Date(orderedAt.getTime() + 30 * 60000) : undefined,
+    results_available_at: hasResults ? new Date(orderedAt.getTime() + 120 * 60000) : undefined,
+    results: hasResults ? 'Test results within normal range' : undefined,
+    notes: 'Standard laboratory test',
+  };
 }
 
 // Generate mock beds
@@ -257,6 +408,51 @@ export function generateMockStaff(count: number = 20): Staff[] {
     created_at: new Date(),
     updated_at: new Date(),
   }));
+}
+
+export function generateMockStaffSchedules(staffId: string, count: number = 10): any[] {
+  const shiftTypes = ['morning', 'afternoon', 'evening', 'night'];
+  const departments = ['Emergency', 'Surgery', 'Pediatrics', 'Cardiology', 'Neurology'];
+  
+  return Array.from({ length: count }, (_, i) => {
+    const scheduleDate = new Date();
+    scheduleDate.setDate(scheduleDate.getDate() + i);
+    
+    const shiftType = shiftTypes[Math.floor(Math.random() * shiftTypes.length)];
+    let startTime = '08:00';
+    let endTime = '16:00';
+    
+    switch (shiftType) {
+      case 'morning':
+        startTime = '08:00';
+        endTime = '16:00';
+        break;
+      case 'afternoon':
+        startTime = '12:00';
+        endTime = '20:00';
+        break;
+      case 'evening':
+        startTime = '16:00';
+        endTime = '00:00';
+        break;
+      case 'night':
+        startTime = '20:00';
+        endTime = '08:00';
+        break;
+    }
+    
+    return {
+      id: `schedule-${staffId}-${i + 1}`,
+      staff_id: staffId,
+      schedule_date: scheduleDate,
+      shift_type: shiftType,
+      start_time: startTime,
+      end_time: endTime,
+      department: departments[Math.floor(Math.random() * departments.length)],
+      notes: i % 3 === 0 ? 'On-call duty' : undefined,
+      created_by: 'system',
+    };
+  });
 }
 
 // Service Package Mock Data

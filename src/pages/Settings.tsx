@@ -9,6 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { UserProfile } from '@/components/settings/UserProfile';
 import { HooksManager } from '@/components/settings/HooksManager';
 import { SteeringManager } from '@/components/settings/SteeringManager';
+import { ThemePreference } from '@/components/settings/ThemePreference';
+import { TabSystemSettings } from '@/components/settings/TabSystemSettings';
 import { usePermissions } from '@/hooks/usePermissions';
 import { Permission } from '@/types/enums';
 import { 
@@ -127,6 +129,26 @@ export default function Settings() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
+                    <div className="rounded-lg border p-4">
+                      <h3 className="font-medium mb-2">Appearance</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Customize the look and feel of the application
+                      </p>
+                      <div className="space-y-3">
+                        <ThemePreference />
+                      </div>
+                    </div>
+
+                    <div className="rounded-lg border p-4">
+                      <h3 className="font-medium mb-2">Tab System</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Configure the browser-like tab system behavior and preferences
+                      </p>
+                      <div className="space-y-4">
+                        <TabSystemSettings />
+                      </div>
+                    </div>
+
                     <div className="rounded-lg border p-4">
                       <h3 className="font-medium mb-2">Application Settings</h3>
                       <p className="text-sm text-muted-foreground mb-4">

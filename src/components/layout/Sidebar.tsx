@@ -25,12 +25,21 @@ import {
   Settings,
   X,
   AlertTriangle,
+  ExternalLink,
 } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { usePermissions } from '@/hooks/usePermissions';
 import { Permission } from '@/types/enums';
+import { useTabNavigation } from '@/hooks/useTabNavigation';
+import { useState, MouseEvent } from 'react';
 
 interface NavItem {
   title: string;
@@ -306,6 +315,8 @@ interface SidebarProps {
 
 export function Sidebar({ className, isOpen = true, onClose }: SidebarProps) {
   const { hasAnyPermission } = usePermissions();
+  const { navigateToTab, openInNewTab } = useTabNavigation();
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; item: NavItem } | null>(null);
 
   // Filter navigation items based on permissions
   const filteredSections = navigationSections
@@ -321,6 +332,35 @@ export function Sidebar({ className, isOpen = true, onClose }: SidebarProps) {
       }),
     }))
     .filter((section) => section.items.length > 0); // Remove empty sections
+
+  // Handle link click with tab support
+  const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, item: NavItem) => {
+    // Ctrl+Click or Cmd+Click: Open in new tab
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      openInNewTab(item.href, item.title);
+      return;
+    }
+
+    // Default behavior: Navigate in current tab
+    e.preventDefault();
+    navigateToTab(item.href, item.title);
+    onClose?.(); // Close mobile menu on navigation
+  };
+
+  // Handle middle-click (auxClick)
+  const handleAuxClick = (e: MouseEvent<HTMLAnchorElement>, item: NavItem) => {
+    if (e.button === 1) { // Middle mouse button
+      e.preventDefault();
+      openInNewTab(item.href, item.title);
+    }
+  };
+
+  // Handle right-click for context menu
+  const handleContextMenu = (e: MouseEvent<HTMLAnchorElement>, item: NavItem) => {
+    e.preventDefault();
+    setContextMenu({ x: e.clientX, y: e.clientY, item });
+  };
 
   const sidebarContent = (
     <>
@@ -355,7 +395,9 @@ export function Sidebar({ className, isOpen = true, onClose }: SidebarProps) {
                   <Link
                     key={item.href}
                     to={item.href}
-                    onClick={onClose} // Close mobile menu on navigation
+                    onClick={(e) => handleLinkClick(e, item)}
+                    onAuxClick={(e) => handleAuxClick(e, item)}
+                    onContextMenu={(e) => handleContextMenu(e, item)}
                     className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-colors hover:bg-prussian-blue hover:text-foreground text-cool-gray [&.active]:bg-prussian-blue [&.active]:text-foreground min-h-touch lg:min-h-0"
                     activeProps={{
                       className: 'bg-prussian-blue text-foreground',
@@ -408,6 +450,34 @@ export function Sidebar({ className, isOpen = true, onClose }: SidebarProps) {
             {sidebarContent}
           </aside>
         </>
+      )}
+
+      {/* Context Menu */}
+      {contextMenu && (
+        <DropdownMenu open={!!contextMenu} onOpenChange={(open) => !open && setContextMenu(null)}>
+          <DropdownMenuTrigger asChild>
+            <div
+              style={{
+                position: 'fixed',
+                left: contextMenu.x,
+                top: contextMenu.y,
+                width: 0,
+                height: 0,
+              }}
+            />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem
+              onClick={() => {
+                openInNewTab(contextMenu.item.href, contextMenu.item.title);
+                setContextMenu(null);
+              }}
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Open in New Tab
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )}
     </>
   );

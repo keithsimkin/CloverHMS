@@ -18,6 +18,13 @@ interface ShortcutSection {
   shortcuts: Shortcut[];
 }
 
+// Detect if we're on macOS for displaying correct shortcuts
+const isMac = typeof navigator !== 'undefined' && 
+  (navigator.userAgent.toUpperCase().indexOf('MAC') >= 0 || 
+   navigator.userAgent.toUpperCase().indexOf('DARWIN') >= 0);
+
+const modKey = isMac ? 'Cmd' : 'Ctrl';
+
 const shortcutSections: ShortcutSection[] = [
   {
     title: 'Global',
@@ -25,6 +32,16 @@ const shortcutSections: ShortcutSection[] = [
       { keys: 'Ctrl+K', description: 'Open command palette (coming soon)' },
       { keys: '?', description: 'Show keyboard shortcuts' },
       { keys: 'Esc', description: 'Close dialogs and modals' },
+    ],
+  },
+  {
+    title: 'Tab Management',
+    shortcuts: [
+      { keys: `${modKey}+T`, description: 'Open new Dashboard tab' },
+      { keys: `${modKey}+W`, description: 'Close active tab' },
+      { keys: 'Ctrl+Tab', description: 'Switch to next tab' },
+      { keys: 'Ctrl+Shift+Tab', description: 'Switch to previous tab' },
+      { keys: `${modKey}+1-9`, description: 'Switch to tab by index' },
     ],
   },
   {

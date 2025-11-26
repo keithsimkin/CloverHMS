@@ -13,7 +13,7 @@ import { PatientSearch } from '@/components/patients/PatientSearch';
 import { PatientForm } from '@/components/patients/PatientForm';
 import { PatientDetails } from '@/components/patients/PatientDetails';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { generateMockPatients } from '@/lib/mockData';
+import { getCachedPatients, mockDataCache } from '@/lib/mockDataCache';
 import type { Patient } from '@/types/models';
 import { Gender, Permission } from '@/types/enums';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -21,7 +21,7 @@ import { crudToasts } from '@/lib/toastUtils';
 
 export default function Patients() {
   const { hasPermission } = usePermissions();
-  const [patients, setPatients] = useState<Patient[]>(() => generateMockPatients(50));
+  const [patients, setPatients] = useState<Patient[]>(() => getCachedPatients());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -71,6 +71,7 @@ export default function Patients() {
       };
 
       setPatients((prev) => [newPatient, ...prev]);
+      mockDataCache.updatePatients((prev) => [newPatient, ...prev]);
       setIsCreateDialogOpen(false);
 
       crudToasts.createSuccess('Patient');
@@ -109,6 +110,9 @@ export default function Patients() {
       setPatients((prev) =>
         prev.map((p) => (p.id === selectedPatient.id ? updatedPatient : p))
       );
+      mockDataCache.updatePatients((prev) =>
+        prev.map((p) => (p.id === selectedPatient.id ? updatedPatient : p))
+      );
       setIsEditDialogOpen(false);
       setSelectedPatient(null);
 
@@ -130,6 +134,7 @@ export default function Patients() {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       setPatients((prev) => prev.filter((p) => p.id !== patient.id));
+      mockDataCache.updatePatients((prev) => prev.filter((p) => p.id !== patient.id));
 
       crudToasts.deleteSuccess('Patient');
     } catch (error) {
